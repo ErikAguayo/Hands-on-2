@@ -1,0 +1,70 @@
+         CLIPS (6.31 5/19/15)
+CLIPS> (defrule r1 (monkey near door) (monkey farfrom window) => (printout  t "monkey goes to the box" crlf) (assert (monkey near box)) (retract 1) (retract 2))
+CLIPS>
+
+(defrule r2 (monkey near box) (monkey hands-free) => (printout t "mokey took the box" crlf) (retract 4) (assert (monkey hands-busy)) (assert (monkey grabbed-box)))
+CLIPS> (defrule r3 (monkey near box) (monkey hands-busy) (monkey grabbed-box) => (printout t "monkey goes below the banana" crlf) (assert (monkey below-banana)))
+CLIPS> (defrule r4 (monkey up-box) (monkey below-banana) => (printout t "monkey almost got banana" crlf) (assert (monkey jumpto-banana)))
+CLIPS> (defrule r5 (monkey jumpto-banana)  => (printout t "monkey got banana" crlf) (assert (monkey got-banana)))
+CLIPS> (rules)
+r1
+r2
+r3
+r4
+r5
+For a total of 5 defrules.
+CLIPS> (facts)
+f-0     (initial-fact)
+For a total of 1 fact.
+CLIPS> (assert (monkey near box))
+<Fact-1>
+CLIPS> (assert (monkey farfrom window))
+<Fact-2>
+CLIPS> (run)
+CLIPS> (assert (monkey near door))
+<Fact-3>
+CLIPS> (run)
+monkey goes to the box
+CLIPS> (facts)
+f-0     (initial-fact)
+f-3     (monkey near door)
+For a total of 2 facts.
+CLIPS> (assert (monkey hands-free))
+<Fact-4>
+CLIPS> (run)
+CLIPS> (assert (monkey near box))
+<Fact-5>
+CLIPS> (run)
+mokey took the box
+monkey goes below the banana
+CLIPS> (facts)
+f-0     (initial-fact)
+f-3     (monkey near door)
+f-5     (monkey near box)
+f-6     (monkey hands-busy)
+f-7     (monkey grabbed-box)
+f-8     (monkey below-banana)
+For a total of 6 facts.
+CLIPS> (run)
+CLIPS> (assert (monkey up-box))
+<Fact-9>
+CLIPS> (run)
+monkey almost got banana
+monkey got banana
+CLIPS> (facts)
+f-0     (initial-fact)
+f-3     (monkey near door)
+f-5     (monkey near box)
+f-6     (monkey hands-busy)
+f-7     (monkey grabbed-box)
+f-8     (monkey below-banana)
+f-9     (monkey up-box)
+f-10    (monkey jumpto-banana)
+f-11    (monkey got-banana)
+For a total of 9 facts.
+CLIPS> (defrule r6 (monkey got-banana) (monkey peels-banana)  => (printout t "monkey eat banana" crlf) )
+CLIPS> (assert (monkey peels-banana))
+<Fact-12>
+CLIPS> (run)
+monkey eat banana
+CLIPS>
